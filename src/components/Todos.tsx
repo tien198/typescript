@@ -1,25 +1,18 @@
-import React, { ReactNode } from 'react';
-import Todo from '../models/todo';
+import React, { MouseEvent, useContext } from 'react';
+import TodoItem from './TodoItem';
+import { TodoContext } from '../store/todo-context';
 
-const Todos: React.FunctionComponent<{ items: Todo[] }> = (props) => {
-    const { items } = props
+function Todos() {
+    const { items, removeTodo } = useContext(TodoContext)
 
     return (
-        <Container text={''}>
+        <ul>
             {items.map(i => (
-                <li key={i.id}>{i.text}</li>
+                <TodoItem key={i.id} text={i.text} removeTodo={removeTodo.bind(null, i.id)} />
             ))}
-        </Container>
+        </ul>
     )
 }
 
 export default Todos;
 
-
-function Container(props: { children: any, text: string }) {
-    return (
-        <div style={{ textAlign: 'center' }}>
-            {props.children}
-        </div>
-    )
-}
